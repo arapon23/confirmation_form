@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     $message .= "\r\n\r\n" . $name;
 
     // メール送信
-    mb_send_mail($to, $message, $headers);
+    mb_send_mail($to, $subject, $message, $headers);
 
     // 完了メッセージ
     $complete_msg = '送信されました！';
