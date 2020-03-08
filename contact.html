@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせフォーム</title>
 
+<!-- タイトルの下にBootstrapを記入 -->
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -20,6 +21,7 @@
     crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
@@ -34,15 +36,15 @@
   <div class="container">
     <form action="check.php" method="POST" class="row">
       <div class="col-sm-8 col-sm-offset-2">
-        
+
         <div class="form-group">
           <label for="name">お名前 <span class="label label-danger">必須</span></label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="例） 山田 太郎">
+          <input type="text" id="name" name="my_name" class="form-control" placeholder="例） 山田 太郎">
         </div>
 
         <div class="form-group">
-          <label for="mymail">メールアドレス <span class="label label-danger">必須</span></label>
-          <input type="email" id="mymail" name="mymail" class="form-control" placeholder="例） xxx@example.com">
+          <label for="email">メールアドレス <span class="label label-danger">必須</span></label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="例） xxx@example.com">
         </div>
 
         <div class="form-group">
@@ -50,7 +52,7 @@
           <textarea name="message" rows="10" class="form-control" placeholder="今回のお問合せ内容をご入力ください。"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-default btn-block">送信する</button>
+        <button type="submit" class="btn btn-success btn-block">送信する</button>
       </div>
     </form>
   </div>
