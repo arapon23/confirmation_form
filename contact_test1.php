@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
   $message = '';
   $err_msg = '';
   $complete_msg = '';
+
 } else {
   // フォームが送信された場合（POST処理）
   // 入力された値を取得する
@@ -27,8 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
   // エラーなし（全ての項目が入力されている）
   if ($err_msg == '') {
-    $to = 'kyotogamiyako30@gmail.com'; // 管理者のメールアドレスなど送信先を指定
-    $headers = "From: " . $email . "\r\n";
+    $to = "ara.pon-pon.23@kb4.so-net.ne.jp"; // 管理者のメールアドレスなど送信先を指定
+    // $headers = "From: " . $email . "\r\n";
+    // 下記に修正
+    $headers = "From: from@pg-happy.jp";
 
     // 本文の最後に名前を追加
     $message .= "\r\n\r\n" . $name;
@@ -37,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     mb_send_mail($to, $message, $headers);
 
     // 完了メッセージ
+    var_dump($to, $message, $headers);
+
     $complete_msg = '送信されました！';
 
     // 全てクリア
