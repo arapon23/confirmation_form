@@ -1,31 +1,71 @@
 <?php
-require_once("./phpmailer/class.phpmailer.php");
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set("display_errors", "0");						//エラー表示：1　非表示:0
+date_default_timezone_set('Asia/Tokyo');
+require_once("./PHPMailer/PHPMailerAutoload.php");	//ライブラリー読込
+mb_language("japanese");
 mb_internal_encoding("UTF-8");
 
-$to = "ara.pon-pon.23@kb4.so-net.ne.jp";      //宛先
-$subject = "メールの件名";         //件名
-$body = "メールの本文です。";      //本文
-$from = "user@send.com";      //仮の差出人
-$fromname = "送信者";      //仮の差し出し人名
 
+//認証情報
+$host          = "smtp.example.com";
+$smtp_user     = "arai.yuta2019@gmail.com";
+$smtp_password = "fdxq psoa iqni tfoz";
+$from          = "from mail address";
+$port          = 25;
+$ssl_type      = "ssl";
+
+
+//宛先・件名・本文
+//POSTやGETでメールを送信する場合
+//$fromname = "送信者名だよ";
+//$to       = urldecode(htmlspecialchars($_POST["to"],  ENT_QUOTES));
+//$subject  = urldecode(htmlspecialchars($_POST["subject"],  ENT_QUOTES));
+//$body     = urldecode(htmlspecialchars($_POST["body"],  ENT_QUOTES));
+
+//固定テキストでテスト用
+$name = "送信者名だよ";
+$to       = "info@example.com";
+$subject  = "十分に長い日本語の題名（subject）を作成しましょう、ｱｲｳｴｵかきくけこサシスセソ";
+$message     = "ここに本文が入りますよ！ここに本文が入りますよ！
+ここに本文が入りますよ！ここに本文が入りますよ！ここに本文が入りますよ！ここに本文が入りますよ！
+十分に長い日本語の題名（subject）を作成しましょう、ｱｲｳｴｵかきくけこサシスセソ";
+
+
+//メール送信
 $mail = new PHPMailer();
-$mail->CharSet = "iso-2022-jp";
-$mail->Encoding = "7bit";
+$mail->IsSMTP();
+$mail->SMTPAuth    = true;
+//$mail->SMTPDebug   = 2;	//デバッグなどを行うときはコメントアウトを解除！
+$mail->SMTPOptions = array(
+	'ssl' => array(
+		'verify_peer'       => false,	//SSLサーバー証明書の検証を要求するか（デフォルト：true）
+		'verify_peer_name'  => false,	//ピア名の検証を要求するか（デフォルト：true）
+		'allow_self_signed' => true		//自己証明の証明書を許可するか（デフォルト：false、trueにする場合は「verify_peer」をfalseに）
+	)
+);
+$mail->CharSet    = "utf-8";
+$mail->SMTPSecure = $ssl_type;
+$mail->Host       = $host;
+$mail->Port       = $port;
+$mail->IsHTML(false);
+$mail->Username   = $smtp_user;
+$mail->Password   = $smtp_password; 
+$mail->SetFrom($smtp_user);
+$mail->From       = $from;
+$mail->FromName   = mb_encode_mimeheader($name, "JIS", "UTF-8");
+$mail->Subject    = mb_encode_mimeheader($subject,  "JIS", "UTF-8");
+$mail->Body       = $message;
+$mail->AddAddress($to);
 
-$mail->IsSMTP();               //「SMTPサーバーを使うよ」設定
-$mail->SMTPAuth = TRUE;        //「SMTP認証を使うよ」設定
-$mail->Host = 'send.com:25';   // SMTPサーバーアドレス:ポート番号
-$mail->Username = '55718';      // SMTP認証用のユーザーID:55718
-$mail->Password = 'aiueo300';  // SMTP認証用のパスワード
 
-$mail->AddAddress($to); 
-$mail->From = $from;
-$mail->FromName = mb_encode_mimeheader(mb_convert_encoding($fromname,"JIS","UTF-8"));
-$mail->Subject = mb_encode_mimeheader(mb_convert_encoding($subject,"JIS","UTF-8"));
-$mail->Body = mb_convert_encoding($body,"JIS","UTF-8");
+//送信判定
+if ($mail->Send()) {
+	echo "送信が成功したよ！";
+} else {
+	echo "送信が失敗したよ、、設定ミスがあるのかもね、、";
+}
 
-//メールを送信
-$mail->Send();
 ?>
 
 <!DOCTYPE html>
